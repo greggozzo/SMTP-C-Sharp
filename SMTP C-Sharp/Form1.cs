@@ -134,6 +134,7 @@ namespace SMTP_C_Sharp
                     }
                     catch (Exception ex)
                     {
+                        MessageBox.Show("Could not get password from csv file. - " + ex.Message);
                     }
                 }
             }
@@ -161,6 +162,7 @@ namespace SMTP_C_Sharp
                     }
                     catch (Exception ex)
                     {
+                        MessageBox.Show("Could not get username from csv file. - " + ex.Message);
                     }
                 }
             }
