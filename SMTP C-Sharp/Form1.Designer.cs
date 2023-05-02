@@ -183,6 +183,7 @@ namespace SMTP_C_Sharp
             // 
             this.TxtSecret.Location = new System.Drawing.Point(305, 125);
             this.TxtSecret.Name = "TxtSecret";
+            this.TxtSecret.PasswordChar = '*';
             this.TxtSecret.Size = new System.Drawing.Size(204, 20);
             this.TxtSecret.TabIndex = 15;
             // 
