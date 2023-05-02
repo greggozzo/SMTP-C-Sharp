@@ -29,6 +29,7 @@ namespace SMTP_C_Sharp
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.LblRegion = new System.Windows.Forms.Label();
             this.LblFrom = new System.Windows.Forms.Label();
             this.LblTo = new System.Windows.Forms.Label();
@@ -284,6 +285,7 @@ namespace SMTP_C_Sharp
             this.Controls.Add(this.LblTo);
             this.Controls.Add(this.LblFrom);
             this.Controls.Add(this.LblRegion);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "AWS SMTP Client";
             this.ResumeLayout(false);
