@@ -55,6 +55,14 @@ namespace SMTP_C_Sharp
             this.CheckDelegate = new System.Windows.Forms.CheckBox();
             this.TxtDelegate = new System.Windows.Forms.TextBox();
             this.ButtonSearchFile = new System.Windows.Forms.Button();
+            this.textReply = new System.Windows.Forms.TextBox();
+            this.checkReplyTo = new System.Windows.Forms.CheckBox();
+            this.checkBcc = new System.Windows.Forms.CheckBox();
+            this.textReference = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkLoop = new System.Windows.Forms.CheckBox();
+            this.textLoop = new System.Windows.Forms.TextBox();
+            this.textBcc = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // LblRegion
@@ -87,7 +95,7 @@ namespace SMTP_C_Sharp
             // LblSubject
             // 
             this.LblSubject.AutoSize = true;
-            this.LblSubject.Location = new System.Drawing.Point(26, 232);
+            this.LblSubject.Location = new System.Drawing.Point(26, 264);
             this.LblSubject.Name = "LblSubject";
             this.LblSubject.Size = new System.Drawing.Size(46, 13);
             this.LblSubject.TabIndex = 3;
@@ -153,7 +161,7 @@ namespace SMTP_C_Sharp
             // 
             // TxtSubject
             // 
-            this.TxtSubject.Location = new System.Drawing.Point(29, 248);
+            this.TxtSubject.Location = new System.Drawing.Point(26, 280);
             this.TxtSubject.Name = "TxtSubject";
             this.TxtSubject.Size = new System.Drawing.Size(204, 20);
             this.TxtSubject.TabIndex = 11;
@@ -258,11 +266,86 @@ namespace SMTP_C_Sharp
             this.ButtonSearchFile.UseVisualStyleBackColor = true;
             this.ButtonSearchFile.Click += new System.EventHandler(this.ButtonSearchFile_Click);
             // 
+            // textReply
+            // 
+            this.textReply.Location = new System.Drawing.Point(302, 371);
+            this.textReply.Name = "textReply";
+            this.textReply.Size = new System.Drawing.Size(204, 20);
+            this.textReply.TabIndex = 23;
+            // 
+            // checkReplyTo
+            // 
+            this.checkReplyTo.AutoSize = true;
+            this.checkReplyTo.Location = new System.Drawing.Point(302, 348);
+            this.checkReplyTo.Name = "checkReplyTo";
+            this.checkReplyTo.Size = new System.Drawing.Size(81, 17);
+            this.checkReplyTo.TabIndex = 24;
+            this.checkReplyTo.Text = "In-Reply-To";
+            this.checkReplyTo.UseVisualStyleBackColor = true;
+            // 
+            // checkBcc
+            // 
+            this.checkBcc.AutoSize = true;
+            this.checkBcc.Location = new System.Drawing.Point(29, 209);
+            this.checkBcc.Name = "checkBcc";
+            this.checkBcc.Size = new System.Drawing.Size(67, 17);
+            this.checkBcc.TabIndex = 25;
+            this.checkBcc.Text = "Use Bcc";
+            this.checkBcc.UseVisualStyleBackColor = true;
+            // 
+            // textReference
+            // 
+            this.textReference.Location = new System.Drawing.Point(302, 417);
+            this.textReference.Name = "textReference";
+            this.textReference.Size = new System.Drawing.Size(204, 20);
+            this.textReference.TabIndex = 26;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(302, 397);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Reference";
+            // 
+            // checkLoop
+            // 
+            this.checkLoop.AutoSize = true;
+            this.checkLoop.Location = new System.Drawing.Point(305, 452);
+            this.checkLoop.Name = "checkLoop";
+            this.checkLoop.Size = new System.Drawing.Size(124, 17);
+            this.checkLoop.TabIndex = 28;
+            this.checkLoop.Text = "Loop Emails # Times";
+            this.checkLoop.UseVisualStyleBackColor = true;
+            // 
+            // textLoop
+            // 
+            this.textLoop.Location = new System.Drawing.Point(435, 450);
+            this.textLoop.Name = "textLoop";
+            this.textLoop.Size = new System.Drawing.Size(39, 20);
+            this.textLoop.TabIndex = 29;
+            // 
+            // textBcc
+            // 
+            this.textBcc.Location = new System.Drawing.Point(26, 232);
+            this.textBcc.Name = "textBcc";
+            this.textBcc.Size = new System.Drawing.Size(207, 20);
+            this.textBcc.TabIndex = 30;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 487);
+            this.Controls.Add(this.textBcc);
+            this.Controls.Add(this.textLoop);
+            this.Controls.Add(this.checkLoop);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textReference);
+            this.Controls.Add(this.checkBcc);
+            this.Controls.Add(this.checkReplyTo);
+            this.Controls.Add(this.textReply);
             this.Controls.Add(this.ButtonSearchFile);
             this.Controls.Add(this.TxtDelegate);
             this.Controls.Add(this.CheckDelegate);
@@ -288,6 +371,7 @@ namespace SMTP_C_Sharp
             this.Controls.Add(this.LblRegion);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AWS SMTP Client";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -321,6 +405,14 @@ namespace SMTP_C_Sharp
         private System.Windows.Forms.CheckBox CheckDelegate;
         private System.Windows.Forms.TextBox TxtDelegate;
         private System.Windows.Forms.Button ButtonSearchFile;
+        private System.Windows.Forms.TextBox textReply;
+        private System.Windows.Forms.CheckBox checkReplyTo;
+        private System.Windows.Forms.CheckBox checkBcc;
+        private System.Windows.Forms.TextBox textReference;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkLoop;
+        private System.Windows.Forms.TextBox textLoop;
+        private System.Windows.Forms.TextBox textBcc;
     }
 }
 

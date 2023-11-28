@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace SMTP_C_Sharp
 {
     public partial class Form1 : Form
@@ -69,13 +70,15 @@ namespace SMTP_C_Sharp
 
             if (checkBox1.Checked == true)
             {
+                // Grabs password from csv file downloaded when creating SMTP creds from IAM
                 username = getUserName();
                 password = getUserPass();
             }
 
+            // Checking for empty credentials
             if (CheckTextBoxEmpty(CbRegion.Text, username, password) > 0)
                 return;
-
+            // Checking for empty text boxes
             if (CheckEmailStrings(sTo, From, Subject, Body) > 0)
                 return;
 
@@ -85,27 +88,73 @@ namespace SMTP_C_Sharp
             mailMessage.Subject = Subject;
             mailMessage.Body = Body;
 
+            // Testing Threading by adding reference and in-reply-to headers -- still working on this
+            if (checkReplyTo.Checked == true)
+            {
+                mailMessage.Headers.Add("In-Reply-To", textReply.Text);
+                mailMessage.Headers.Add("References", textReference.Text);
+                //mailMessage.Headers.Add("Thread-Topic", "");
+            }
+            // This was to test link clicking in us-west-2
+            if (host== "email-smtp.us-west-2.amazonaws.com")
+            {
+                mailMessage.IsBodyHtml = true;
+                mailMessage.Body = "This is a Test <html><a href=\"https://cloudyfront.com\">link</a></html>";
+                mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "ClickOpen");
+                mailMessage.Bcc.Add("ggozzo1979@gmail.com");
+            }
+            // If using us-east-1 adds the headers for CloudWatch metric logging via config set and tags
+            if (host == "email-smtp.us-east-1.amazonaws.com")
+            {
+                //mailMessage.CC.Add("ggozzo1979@gmail.com");
+                var tags = "TestTag=DotNet-App";
+                mailMessage.Headers.Add("X-SES-MESSAGE-TAGS", tags);
+                mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "default-IP-test-set");
+            }
+            if (checkBcc.Checked == true)
+            {
+                mailMessage.Bcc.Add(textBcc.Text);
+            }
             try
             {
-                using (var client = new System.Net.Mail.SmtpClient(host, port))
+                var xcnt = 0;
+                var xcntLoop = 1;
+                if ( checkLoop.Checked == true)
                 {
-                    client.Credentials = new System.Net.NetworkCredential(username, password);
-                    client.EnableSsl = true;
-                    if (txtAttachment.Text != "")
+                    // defines if loop is used
+                    var xcntString = textLoop.Text;
+                    xcntLoop = Convert.ToInt32(xcntString);
+                }
+                 
+                while (xcnt < xcntLoop) //loop to mass send increments the subject line count
+                {
+                    mailMessage.Subject = Subject + string.Format($" {xcnt}");
+                    using (var client = new System.Net.Mail.SmtpClient(host, port))
                     {
-                        string file = txtAttachment.Text;
-                        System.Net.Mail.Attachment attachment;
-                        attachment = new System.Net.Mail.Attachment(file);
-                        mailMessage.Attachments.Add(attachment);
+                        client.Credentials = new System.Net.NetworkCredential(username, password);
+                        client.EnableSsl = true;
+                        if (txtAttachment.Text != "")
+                        {
+                            string file = txtAttachment.Text;
+                            System.Net.Mail.Attachment attachment;
+                            attachment = new System.Net.Mail.Attachment(file);
+                            mailMessage.Attachments.Add(attachment);
+                        }
+                        if (CheckDelegate.Checked)
+                        {
+                            string headerARN = TxtDelegate.Text;
+                            mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "Cross-Account-Config-set");
+                            mailMessage.Headers.Add("X-SES-SOURCE-ARN", headerARN);
+                            mailMessage.Headers.Add("X-SES-FROM-ARN", headerARN);
+                            mailMessage.Headers.Add("X-SES-RETURN-PATH-ARN", headerARN);
+                        }
+
+                        client.Send(mailMessage);
+                        xcnt += 1;
+                        
+                        waitTime(1000);
+
                     }
-                    if (CheckDelegate.Checked)
-                    {
-                        string headerARN = TxtDelegate.Text;
-                        mailMessage.Headers.Add("X-SES-SOURCE-ARN", headerARN);
-                        mailMessage.Headers.Add("X-SES-FROM-ARN", headerARN);
-                        mailMessage.Headers.Add("X-SES-RETURN-PATH-ARN", headerARN);
-                    }
-                    client.Send(mailMessage);
                 }
                 MessageBox.Show("Sent successful!");
             }
@@ -114,6 +163,7 @@ namespace SMTP_C_Sharp
                 MessageBox.Show(ex.Message);
             }
         }
+
         private string getUserPass()
         {
             var accesskey = "";
@@ -266,7 +316,29 @@ namespace SMTP_C_Sharp
             if (TxtDelegate.Text == "Identity ARN")
                 TxtDelegate.Text = "";  
         }
+        public void waitTime(int milliseconds)
+        {
+            var timer1 = new System.Windows.Forms.Timer();
+            if (milliseconds == 0 || milliseconds < 0) return;
 
-      
+            // Console.WriteLine("start wait timer");
+            timer1.Interval = milliseconds;
+            timer1.Enabled = true;
+            timer1.Start();
+
+            timer1.Tick += (s, e) =>
+            {
+                timer1.Enabled = false;
+                timer1.Stop();
+                // Console.WriteLine("stop wait timer");
+            };
+
+            while (timer1.Enabled)
+            {
+                Application.DoEvents();
+            }
+        }
+
+
     }
 }
