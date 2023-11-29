@@ -337,8 +337,47 @@ namespace SMTP_C_Sharp
             {
                 Application.DoEvents();
             }
+        }        
+
+        private void checkLoop_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkLoop.Checked == false)
+            {
+                textLoop.ReadOnly = true;
+            }
+            else if (checkLoop.Checked == true)
+            {
+                textLoop.ReadOnly = false;
+            }
+
         }
 
+        private void checkReplyTo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkReplyTo.Checked == false)
+            {
+                textReply.ReadOnly = true;
+                textReference.ReadOnly = true;
+            }
+            else if (checkReplyTo.Checked == true)
+            {
+                textReply.ReadOnly = false;
+                textReference.ReadOnly = false;
+            }
 
+        }
+
+        private void checkBcc_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBcc.Checked == false)
+            {
+                textBcc.ReadOnly = true;
+            }
+            else if (checkBcc.Checked == true)
+            {
+                textBcc.ReadOnly = false;
+            }
+
+        }
     }
 }

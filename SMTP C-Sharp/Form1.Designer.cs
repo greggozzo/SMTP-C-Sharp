@@ -113,7 +113,7 @@ namespace SMTP_C_Sharp
             // lblAtach
             // 
             this.lblAtach.AutoSize = true;
-            this.lblAtach.Location = new System.Drawing.Point(26, 371);
+            this.lblAtach.Location = new System.Drawing.Point(26, 357);
             this.lblAtach.Name = "lblAtach";
             this.lblAtach.Size = new System.Drawing.Size(64, 13);
             this.lblAtach.TabIndex = 5;
@@ -161,7 +161,7 @@ namespace SMTP_C_Sharp
             // 
             // TxtSubject
             // 
-            this.TxtSubject.Location = new System.Drawing.Point(26, 280);
+            this.TxtSubject.Location = new System.Drawing.Point(29, 280);
             this.TxtSubject.Name = "TxtSubject";
             this.TxtSubject.Size = new System.Drawing.Size(204, 20);
             this.TxtSubject.TabIndex = 11;
@@ -175,7 +175,7 @@ namespace SMTP_C_Sharp
             // 
             // txtAttachment
             // 
-            this.txtAttachment.Location = new System.Drawing.Point(29, 426);
+            this.txtAttachment.Location = new System.Drawing.Point(29, 402);
             this.txtAttachment.Name = "txtAttachment";
             this.txtAttachment.Size = new System.Drawing.Size(204, 20);
             this.txtAttachment.TabIndex = 13;
@@ -199,7 +199,7 @@ namespace SMTP_C_Sharp
             // 
             this.TxtFilePath.Location = new System.Drawing.Point(305, 229);
             this.TxtFilePath.Name = "TxtFilePath";
-            this.TxtFilePath.Size = new System.Drawing.Size(204, 20);
+            this.TxtFilePath.Size = new System.Drawing.Size(201, 20);
             this.TxtFilePath.TabIndex = 16;
             // 
             // checkBox1
@@ -215,9 +215,9 @@ namespace SMTP_C_Sharp
             // 
             // ButtonSend
             // 
-            this.ButtonSend.Location = new System.Drawing.Point(29, 452);
+            this.ButtonSend.Location = new System.Drawing.Point(29, 437);
             this.ButtonSend.Name = "ButtonSend";
-            this.ButtonSend.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSend.Size = new System.Drawing.Size(75, 27);
             this.ButtonSend.TabIndex = 18;
             this.ButtonSend.Text = "Send";
             this.ButtonSend.UseVisualStyleBackColor = true;
@@ -227,7 +227,7 @@ namespace SMTP_C_Sharp
             // 
             this.ButtonSearch.Location = new System.Drawing.Point(305, 200);
             this.ButtonSearch.Name = "ButtonSearch";
-            this.ButtonSearch.Size = new System.Drawing.Size(201, 23);
+            this.ButtonSearch.Size = new System.Drawing.Size(204, 23);
             this.ButtonSearch.TabIndex = 19;
             this.ButtonSearch.Text = "Search For CSV File";
             this.ButtonSearch.UseVisualStyleBackColor = true;
@@ -240,7 +240,7 @@ namespace SMTP_C_Sharp
             // CheckDelegate
             // 
             this.CheckDelegate.AutoSize = true;
-            this.CheckDelegate.Location = new System.Drawing.Point(305, 283);
+            this.CheckDelegate.Location = new System.Drawing.Point(305, 260);
             this.CheckDelegate.Name = "CheckDelegate";
             this.CheckDelegate.Size = new System.Drawing.Size(128, 17);
             this.CheckDelegate.TabIndex = 20;
@@ -249,16 +249,16 @@ namespace SMTP_C_Sharp
             // 
             // TxtDelegate
             // 
-            this.TxtDelegate.Location = new System.Drawing.Point(302, 311);
+            this.TxtDelegate.Location = new System.Drawing.Point(305, 283);
             this.TxtDelegate.Name = "TxtDelegate";
-            this.TxtDelegate.Size = new System.Drawing.Size(204, 20);
+            this.TxtDelegate.Size = new System.Drawing.Size(201, 20);
             this.TxtDelegate.TabIndex = 21;
             this.TxtDelegate.Text = "Identity ARN";
             this.TxtDelegate.Enter += new System.EventHandler(this.TxtDelegate_Enter);
             // 
             // ButtonSearchFile
             // 
-            this.ButtonSearchFile.Location = new System.Drawing.Point(29, 397);
+            this.ButtonSearchFile.Location = new System.Drawing.Point(29, 373);
             this.ButtonSearchFile.Name = "ButtonSearchFile";
             this.ButtonSearchFile.Size = new System.Drawing.Size(201, 23);
             this.ButtonSearchFile.TabIndex = 22;
@@ -268,20 +268,22 @@ namespace SMTP_C_Sharp
             // 
             // textReply
             // 
-            this.textReply.Location = new System.Drawing.Point(302, 371);
+            this.textReply.Location = new System.Drawing.Point(302, 334);
             this.textReply.Name = "textReply";
+            this.textReply.ReadOnly = true;
             this.textReply.Size = new System.Drawing.Size(204, 20);
             this.textReply.TabIndex = 23;
             // 
             // checkReplyTo
             // 
             this.checkReplyTo.AutoSize = true;
-            this.checkReplyTo.Location = new System.Drawing.Point(302, 348);
+            this.checkReplyTo.Location = new System.Drawing.Point(305, 311);
             this.checkReplyTo.Name = "checkReplyTo";
             this.checkReplyTo.Size = new System.Drawing.Size(81, 17);
             this.checkReplyTo.TabIndex = 24;
             this.checkReplyTo.Text = "In-Reply-To";
             this.checkReplyTo.UseVisualStyleBackColor = true;
+            this.checkReplyTo.CheckedChanged += new System.EventHandler(this.checkReplyTo_CheckedChanged);
             // 
             // checkBcc
             // 
@@ -292,18 +294,20 @@ namespace SMTP_C_Sharp
             this.checkBcc.TabIndex = 25;
             this.checkBcc.Text = "Use Bcc";
             this.checkBcc.UseVisualStyleBackColor = true;
+            this.checkBcc.CheckedChanged += new System.EventHandler(this.checkBcc_CheckedChanged);
             // 
             // textReference
             // 
-            this.textReference.Location = new System.Drawing.Point(302, 417);
+            this.textReference.Location = new System.Drawing.Point(302, 373);
             this.textReference.Name = "textReference";
+            this.textReference.ReadOnly = true;
             this.textReference.Size = new System.Drawing.Size(204, 20);
             this.textReference.TabIndex = 26;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(302, 397);
+            this.label1.Location = new System.Drawing.Point(319, 357);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 27;
@@ -312,32 +316,35 @@ namespace SMTP_C_Sharp
             // checkLoop
             // 
             this.checkLoop.AutoSize = true;
-            this.checkLoop.Location = new System.Drawing.Point(305, 452);
+            this.checkLoop.Location = new System.Drawing.Point(302, 413);
             this.checkLoop.Name = "checkLoop";
             this.checkLoop.Size = new System.Drawing.Size(124, 17);
             this.checkLoop.TabIndex = 28;
             this.checkLoop.Text = "Loop Emails # Times";
             this.checkLoop.UseVisualStyleBackColor = true;
+            this.checkLoop.CheckedChanged += new System.EventHandler(this.checkLoop_CheckedChanged);
             // 
             // textLoop
             // 
-            this.textLoop.Location = new System.Drawing.Point(435, 450);
+            this.textLoop.Location = new System.Drawing.Point(432, 410);
             this.textLoop.Name = "textLoop";
-            this.textLoop.Size = new System.Drawing.Size(39, 20);
+            this.textLoop.ReadOnly = true;
+            this.textLoop.Size = new System.Drawing.Size(74, 20);
             this.textLoop.TabIndex = 29;
             // 
             // textBcc
             // 
-            this.textBcc.Location = new System.Drawing.Point(26, 232);
+            this.textBcc.Location = new System.Drawing.Point(29, 232);
             this.textBcc.Name = "textBcc";
-            this.textBcc.Size = new System.Drawing.Size(207, 20);
+            this.textBcc.ReadOnly = true;
+            this.textBcc.Size = new System.Drawing.Size(204, 20);
             this.textBcc.TabIndex = 30;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(536, 487);
+            this.ClientSize = new System.Drawing.Size(522, 470);
             this.Controls.Add(this.textBcc);
             this.Controls.Add(this.textLoop);
             this.Controls.Add(this.checkLoop);
