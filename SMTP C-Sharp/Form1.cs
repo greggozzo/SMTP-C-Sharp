@@ -89,28 +89,34 @@ namespace SMTP_C_Sharp
             mailMessage.Body = Body;
 
             // Testing Threading by adding reference and in-reply-to headers -- still working on this
-            if (checkReplyTo.Checked == true)
-            {
-                mailMessage.Headers.Add("In-Reply-To", textReply.Text);
-                mailMessage.Headers.Add("References", textReference.Text);
-                //mailMessage.Headers.Add("Thread-Topic", "");
-            }
+            //if (checkReplyTo.Checked == true)
+            //{
+            //    mailMessage.Headers.Add("In-Reply-To", textReply.Text);
+            //    mailMessage.Headers.Add("References", textReference.Text);
+            //    mailMessage.Headers.Add("Thread-Topic", "");
+            //}
+
+
             // This was to test link clicking in us-west-2
-            if (host== "email-smtp.us-west-2.amazonaws.com")
-            {
-                mailMessage.IsBodyHtml = true;
-                mailMessage.Body = "This is a Test <html><a href=\"https://cloudyfront.com\">link</a></html>";
-                mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "ClickOpen");
-                mailMessage.Bcc.Add("ggozzo1979@gmail.com");
-            }
+            //if (host== "email-smtp.us-west-2.amazonaws.com")
+            //{
+            //    mailMessage.IsBodyHtml = true;
+            //    mailMessage.Body = "This is a Test <html><a href=\"https://cloudyfront.com\">link</a></html>";
+            //    mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "ClickOpen"); //your configuration set in SES
+            //    mailMessage.Bcc.Add("email address");
+            //}
+
+
             // If using us-east-1 adds the headers for CloudWatch metric logging via config set and tags
-            if (host == "email-smtp.us-east-1.amazonaws.com")
-            {
-                //mailMessage.CC.Add("ggozzo1979@gmail.com");
-                var tags = "TestTag=DotNet-App";
-                mailMessage.Headers.Add("X-SES-MESSAGE-TAGS", tags);
-                mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "default-IP-test-set");
-            }
+            //if (host == "email-smtp.us-east-1.amazonaws.com")
+            //{
+            //    mailMessage.CC.Add("email address");
+            //    var tags = "TestTag=DotNet-App";
+            //    mailMessage.Headers.Add("X-SES-MESSAGE-TAGS", tags);
+            //    mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "default-IP-test-set"); //your configuration set in SES
+            //}
+
+            //add Bcc if checked
             if (checkBcc.Checked == true)
             {
                 mailMessage.Bcc.Add(textBcc.Text);
@@ -152,7 +158,7 @@ namespace SMTP_C_Sharp
                         client.Send(mailMessage);
                         xcnt += 1;
                         
-                        waitTime(1000);
+                        waitTime(900);
 
                     }
                 }
