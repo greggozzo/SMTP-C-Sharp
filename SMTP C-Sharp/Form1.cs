@@ -9,8 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
+using System.Net;
 
 namespace SMTP_C_Sharp
 {
@@ -67,6 +66,7 @@ namespace SMTP_C_Sharp
             var sTo = TxtTo.Text;
             var Subject = TxtSubject.Text;
             var Body = TxtBody.Text;
+            //var Body = $"<html>{{{{ses:openTracker}}}}<a href=\"https://cloudyfront.com\">link</a> {TxtBody.Text}</html> ";
 
             if (checkBox1.Checked == true)
             {
@@ -83,11 +83,23 @@ namespace SMTP_C_Sharp
                 return;
 
             var mailMessage = new System.Net.Mail.MailMessage();
+            mailMessage.IsBodyHtml = true;
             mailMessage.From = new System.Net.Mail.MailAddress(From);
             mailMessage.To.Add(sTo);
             mailMessage.Subject = Subject;
-            mailMessage.Body = Body;
-
+            if (checkBoxTemplate.Checked)
+            {
+                string htmlBody = EmailBody(textBoxTemplate.Text);
+                htmlBody = htmlBody.Replace("[@Location]", "Red Bluff, CA");
+                htmlBody = htmlBody.Replace("[@Date]", DateTime.Now.ToString("MM/dd/yyyy"));
+                htmlBody = htmlBody.Replace("[@Body]", Body);
+                var formatted = htmlBody;//System.Xml.Linq.XElement.Parse(htmlBody).ToString(); //clean this up
+                mailMessage.Body = $@"{formatted}";
+            }
+            else
+            {
+                mailMessage.Body = Body;
+            }
             // Testing Threading by adding reference and in-reply-to headers -- still working on this
             //if (checkReplyTo.Checked == true)
             //{
@@ -101,20 +113,20 @@ namespace SMTP_C_Sharp
             //if (host== "email-smtp.us-west-2.amazonaws.com")
             //{
             //    mailMessage.IsBodyHtml = true;
-            //    mailMessage.Body = "This is a Test <html><a href=\"https://cloudyfront.com\">link</a></html>";
+            //    mailMessage.Body = "This is a Test <html>{{ses:openTracker}}<a href=\"https://cloudyfront.com\">link</a></html>";
             //    mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "ClickOpen"); //your configuration set in SES
             //    mailMessage.Bcc.Add("email address");
             //}
 
 
-            // If using us-east-1 adds the headers for CloudWatch metric logging via config set and tags
-            //if (host == "email-smtp.us-east-1.amazonaws.com")
-            //{
-            //    mailMessage.CC.Add("email address");
-            //    var tags = "TestTag=DotNet-App";
-            //    mailMessage.Headers.Add("X-SES-MESSAGE-TAGS", tags);
-            //    mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "default-IP-test-set"); //your configuration set in SES
-            //}
+            // If using us-east - 1 adds the headers for CloudWatch metric logging via config set and tags
+             if (host == "email-smtp.us-east-1.amazonaws.com")
+                {
+                    //mailMessage.CC.Add("email address");
+                    var tags = "TestTag=DotNet-App";
+                    mailMessage.Headers.Add("X-SES-MESSAGE-TAGS", tags);
+                    mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", "default-IP-test-set"); //your configuration set in SES
+                }
 
             //add Bcc if checked
             if (checkBcc.Checked == true)
@@ -153,6 +165,10 @@ namespace SMTP_C_Sharp
                             mailMessage.Headers.Add("X-SES-SOURCE-ARN", headerARN);
                             mailMessage.Headers.Add("X-SES-FROM-ARN", headerARN);
                             mailMessage.Headers.Add("X-SES-RETURN-PATH-ARN", headerARN);
+                        }
+                        if (checkBoxConfigSet.Checked)
+                        {
+                            mailMessage.Headers.Add("X-SES-CONFIGURATION-SET", textBoxConfigSet.Text);
                         }
 
                         client.Send(mailMessage);
@@ -286,6 +302,24 @@ namespace SMTP_C_Sharp
                 return count;
             }
             return count;
+        }
+        public string EmailBody(string templateName)
+        {
+            string rt;
+            var htmlTemplateLoc = AppDomain.CurrentDomain.BaseDirectory;
+            WebRequest wRequest;
+            WebResponse wResponse;
+
+            StreamReader SR;
+            templateName = htmlTemplateLoc + templateName;
+            wRequest = WebRequest.Create(templateName);
+            wResponse = wRequest.GetResponse();
+            SR = new StreamReader(wResponse.GetResponseStream());
+
+            rt = SR.ReadToEnd();
+            SR.Close();
+
+            return rt;
         }
 
         private void TxtBody_GotFocus(object sender, EventArgs e)
